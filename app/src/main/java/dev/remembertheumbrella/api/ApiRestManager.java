@@ -2,8 +2,15 @@ package dev.remembertheumbrella.api;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
+
+import org.json.JSONObject;
 
 import dev.remembertheumbrella.R;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.GsonConverterFactory;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 
 /**
@@ -11,11 +18,9 @@ import retrofit2.Retrofit;
  */
 public class ApiRestManager {
 
+    public static final String TAG = "RESTManager";
     private RetrofitService mService;
     private Context mContext;
-
-//    String bcnId = res.getString(R.string.barcelonaId);
-//    String apiKey = res.getString(R.string.weatherAPIKey);
 
     /**
      * Constructor.
@@ -29,11 +34,34 @@ public class ApiRestManager {
 
         String weatherURL = res.getString(R.string.weatherURL);
 
-
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(weatherURL)
+                .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
         mService = retrofit.create(RetrofitService.class);
+    }
+
+    public void getStatus() {
+
+        Resources res = mContext.getResources();
+
+        String bcnId = res.getString(R.string.barcelonaId);
+        String apiKey = res.getString(R.string.weatherAPIKey);
+
+        Call<JSONObject> call = mService.parseStatus(bcnId, apiKey);
+
+        call.enqueue(new Callback<JSONObject>() {
+            @Override
+            public void onResponse(Response<JSONObject> response) {
+
+                Log.v(TAG, "Is success: " + response.isSuccess());
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+
+            }
+        });
     }
 }
