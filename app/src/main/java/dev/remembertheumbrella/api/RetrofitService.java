@@ -11,6 +11,6 @@ import retrofit2.http.Query;
  */
 public interface RetrofitService {
 
-    @GET("/weather?units=metric")
-    Call<JSONObject> parseStatus(@Query("id") String cityId, @Query("appid") String apiKey);
+    @GET("weather")
+    Call<JSONObject> parseStatus(@Query("id") String cityId, @Query("appid") String apiKey, @Query("units") String units);
 }
