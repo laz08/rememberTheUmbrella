@@ -5,4 +5,5 @@
     <string name="weatherAPIKey">f313ff45e61b6ef11ae2ba1f8df2bb18</string>
     <string name="weatherURL">http://api.openweathermap.org/data/2.5/</string>
     <string name="barcelonaId">6356055</string>
+
 </resources>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import dev.remembertheumbrella.R;
@@ -56,6 +57,21 @@ public class ApiRestManager {
             public void onResponse(Response<JSONObject> response) {
 
                 Log.v(TAG, "Is success: " + response.isSuccess());
+                if (response.isSuccess()) {
+
+                    JSONObject body = response.body();
+                    Log.v(TAG, body.toString());
+                    Log.v(TAG, response.message());
+                    if(body.has("name")) {
+
+                        try {
+                            Log.v(TAG, "Name: " + body.getString("name"));
+                        } catch (JSONException e) {
+
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
 
             @Override
