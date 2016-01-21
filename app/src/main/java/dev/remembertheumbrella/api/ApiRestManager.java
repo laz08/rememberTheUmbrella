@@ -48,7 +48,7 @@ public class ApiRestManager {
         String bcnId = res.getString(R.string.barcelonaId);
         String apiKey = res.getString(R.string.weatherAPIKey);
 
-        Call<WeatherStatus> call = mService.parseStatus(bcnId, apiKey, "metric");
+        Call<WeatherStatus> call = mService.parseStatus(bcnId, apiKey, "metric", "ca");
 
         call.enqueue(new Callback<WeatherStatus>() {
 

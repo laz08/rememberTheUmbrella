@@ -11,5 +11,10 @@ import retrofit2.http.Query;
 public interface RetrofitService {
 
     @GET("data/2.5/weather")
-    Call<WeatherStatus> parseStatus(@Query("id") String cityId, @Query("appid") String apiKey, @Query("units") String units);
+    Call<WeatherStatus> parseStatus(
+            @Query("id") String cityId,
+            @Query("appid") String apiKey,
+            @Query("units") String units,
+            @Query("lang") String lang
+    );
 }
