@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.util.Log;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import dev.remembertheumbrella.R;
+import dev.remembertheumbrella.WeatherStatus;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -50,33 +48,27 @@ public class ApiRestManager {
         String bcnId = res.getString(R.string.barcelonaId);
         String apiKey = res.getString(R.string.weatherAPIKey);
 
-        Call<JSONObject> call = mService.parseStatus(bcnId, apiKey, "metric");
+        Call<WeatherStatus> call = mService.parseStatus(bcnId, apiKey, "metric");
 
-        call.enqueue(new Callback<JSONObject>() {
+        call.enqueue(new Callback<WeatherStatus>() {
+
             @Override
-            public void onResponse(Response<JSONObject> response) {
+            public void onResponse(Response<WeatherStatus> response) {
 
                 Log.v(TAG, "Is success: " + response.isSuccess());
                 if (response.isSuccess()) {
 
-                    JSONObject body = response.body();
-                    Log.v(TAG, body.toString());
-                    Log.v(TAG, response.message());
-                    if(body.has("name")) {
+                    WeatherStatus body = response.body();
+                    Log.v(TAG, "Name: " + body.getName());
+                    Log.v(TAG, "Description:" + body.getWeather().get(0).getDescription());
 
-                        try {
-                            Log.v(TAG, "Name: " + body.getString("name"));
-                        } catch (JSONException e) {
-
-                            e.printStackTrace();
-                        }
-                    }
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
 
+                Log.v(TAG, "OnFailure");
             }
         });
     }
