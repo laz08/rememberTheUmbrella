@@ -18,6 +18,14 @@
         </activity>
 
         <activity android:name=".activity.TakeUmbrellaActivity"/>
+
+        <service
+            android:name=".notification.NotificationIntentService"
+            android:enabled="true"
+            android:exported="false"/>
+
+        <receiver android:name=".notification.NotificationEventReceiver"/>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>

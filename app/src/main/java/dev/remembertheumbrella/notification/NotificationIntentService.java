@@ -23,6 +23,14 @@ public class NotificationIntentService extends IntentService {
 
     /**
      * Constructor.
+     */
+    public NotificationIntentService() {
+
+        super(TAG);
+    }
+
+    /**
+     * Constructor.
      *
      * @param name Name.
      */
