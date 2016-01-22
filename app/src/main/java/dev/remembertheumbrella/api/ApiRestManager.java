@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import dev.remembertheumbrella.R;
+import dev.remembertheumbrella.WeatherCallback;
+import dev.remembertheumbrella.helper.ImageLoaderHelper;
 import dev.remembertheumbrella.item.CurrentWeather;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +46,7 @@ public class ApiRestManager {
     /**
      * Returns current weather status.
      */
-    public void getCurrentWeather() {
+    public void getCurrentWeather(final WeatherCallback callback) {
 
         Resources res = mContext.getResources();
 
@@ -65,6 +67,8 @@ public class ApiRestManager {
                     Log.v(TAG, "Name: " + currentWeather.getName());
                     Log.v(TAG, "Description:" + currentWeather.getWeather().getDescription());
 
+                    callback.onWeatherReceived(currentWeather);
+
                 }
             }
 
@@ -75,4 +79,5 @@ public class ApiRestManager {
             }
         });
     }
+
 }

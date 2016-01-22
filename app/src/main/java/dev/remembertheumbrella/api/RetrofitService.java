@@ -18,5 +18,4 @@ public interface RetrofitService {
             @Query("lang") String lang
     );
 
-
 }

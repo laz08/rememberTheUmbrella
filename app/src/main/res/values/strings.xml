@@ -3,7 +3,13 @@
 
     <!-- API Openweather -->
     <string name="weatherAPIKey">f313ff45e61b6ef11ae2ba1f8df2bb18</string>
-    <string name="weatherURL">http://api.openweathermap.org/</string>
     <string name="barcelonaId">6356055</string>
+
+    <!-- URL -->
+    <string name="weatherURL">http://api.openweathermap.org/</string>
+    <string name="iconURL">http://openweathermap.org/img/w/</string>
+
+    <!-- Others -->
+    <string name="iconExtension">.png</string>
 
 </resources>
