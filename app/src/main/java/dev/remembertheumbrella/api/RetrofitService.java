@@ -1,6 +1,6 @@
 package dev.remembertheumbrella.api;
 
-import dev.remembertheumbrella.WeatherStatus;
+import dev.remembertheumbrella.item.CurrentWeather;
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
@@ -11,10 +11,12 @@ import retrofit2.http.Query;
 public interface RetrofitService {
 
     @GET("data/2.5/weather")
-    Call<WeatherStatus> parseStatus(
+    Call<CurrentWeather> getCurrentWeatherStatus(
             @Query("id") String cityId,
             @Query("appid") String apiKey,
             @Query("units") String units,
             @Query("lang") String lang
     );
+
+
 }

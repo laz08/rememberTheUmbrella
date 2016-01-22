@@ -5,7 +5,7 @@ import android.content.res.Resources;
 import android.util.Log;
 
 import dev.remembertheumbrella.R;
-import dev.remembertheumbrella.WeatherStatus;
+import dev.remembertheumbrella.item.CurrentWeather;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
@@ -41,26 +41,29 @@ public class ApiRestManager {
         mService = retrofit.create(RetrofitService.class);
     }
 
-    public void getStatus() {
+    /**
+     * Returns current weather status.
+     */
+    public void getCurrentWeather() {
 
         Resources res = mContext.getResources();
 
         String bcnId = res.getString(R.string.barcelonaId);
         String apiKey = res.getString(R.string.weatherAPIKey);
 
-        Call<WeatherStatus> call = mService.parseStatus(bcnId, apiKey, "metric", "ca");
+        Call<CurrentWeather> call = mService.getCurrentWeatherStatus(bcnId, apiKey, "metric", "ca");
 
-        call.enqueue(new Callback<WeatherStatus>() {
+        call.enqueue(new Callback<CurrentWeather>() {
 
             @Override
-            public void onResponse(Response<WeatherStatus> response) {
+            public void onResponse(Response<CurrentWeather> response) {
 
                 Log.v(TAG, "Is success: " + response.isSuccess());
                 if (response.isSuccess()) {
 
-                    WeatherStatus body = response.body();
-                    Log.v(TAG, "Name: " + body.getName());
-                    Log.v(TAG, "Description:" + body.getWeather().get(0).getDescription());
+                    CurrentWeather currentWeather = response.body();
+                    Log.v(TAG, "Name: " + currentWeather.getName());
+                    Log.v(TAG, "Description:" + currentWeather.getWeather().getDescription());
 
                 }
             }

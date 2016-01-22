@@ -1,4 +1,4 @@
-package dev.remembertheumbrella;
+package dev.remembertheumbrella.item;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -13,6 +13,14 @@ public class Weather {
     @SerializedName("description")
     private String mDescription;
 
+    @SerializedName("icon")
+    private String mIconId;
+
+    /**
+     * Returns Weather id.
+     *
+     * @return Weather id.
+     */
     public long getId() {
 
         return mId;
@@ -26,5 +34,10 @@ public class Weather {
     public String getDescription() {
 
         return mDescription;
+    }
+
+    public String getIconId() {
+
+        return mIconId;
     }
 }

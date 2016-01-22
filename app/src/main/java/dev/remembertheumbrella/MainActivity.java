@@ -7,13 +7,17 @@ import dev.remembertheumbrella.api.ApiRestManager;
 
 public class MainActivity extends AppCompatActivity {
 
+    private ApiRestManager mApiRestManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ApiRestManager apiRestManager = new ApiRestManager(getApplicationContext());
-        apiRestManager.getStatus();
+        mApiRestManager = new ApiRestManager(getApplicationContext());
+        mApiRestManager.getCurrentWeather();
+
+
     }
 }

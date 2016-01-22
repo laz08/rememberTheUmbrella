@@ -10,4 +10,16 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="dev.remembertheumbrella.MainActivity">
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/current_weather_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
 </RelativeLayout>
