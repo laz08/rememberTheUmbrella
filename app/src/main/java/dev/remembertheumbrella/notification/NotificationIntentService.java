@@ -11,7 +11,6 @@ import android.support.v4.content.WakefulBroadcastReceiver;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
-import dev.remembertheumbrella.Codes;
 import dev.remembertheumbrella.R;
 import dev.remembertheumbrella.activity.TakeUmbrellaActivity;
 
@@ -85,7 +84,7 @@ public class NotificationIntentService extends IntentService {
                 .build();
 
         NotificationManager manager = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(Codes.NOTIF_ID, notification);
+        manager.notify(NotificationCodes.NOTIF_ID, notification);
     }
 
     /**
@@ -96,7 +95,7 @@ public class NotificationIntentService extends IntentService {
     private PendingIntent getOnNotificationClickIntent() {
 
         return PendingIntent.getActivity(this,
-                Codes.NOTIF_ID,
+                NotificationCodes.NOTIF_ID,
                 new Intent(this, TakeUmbrellaActivity.class),
                 PendingIntent.FLAG_UPDATE_CURRENT);
     }

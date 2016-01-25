@@ -56,12 +56,13 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        final Context ctx = this;
         mSettingsButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
 
-                openSettingsActivityFrom(getApplicationContext());
+                openSettingsActivityFrom(ctx);
             }
         });
 

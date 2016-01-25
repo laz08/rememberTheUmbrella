@@ -17,5 +17,6 @@ public class SettingsActivity extends BaseActivity {
 
         setContentView(R.layout.activity_settings);
         ButterKnife.bind(this);
+        
     }
 }

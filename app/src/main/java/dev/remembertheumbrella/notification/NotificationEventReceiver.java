@@ -9,8 +9,6 @@ import android.util.Log;
 
 import java.util.Calendar;
 
-import dev.remembertheumbrella.Codes;
-
 /**
  * Notification event receiver.
  */
@@ -46,7 +44,7 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
 
         Intent i = new Intent(ctx, NotificationEventReceiver.class);
         i.setAction(START_NOTIFICATION_SERVICE);
-        return PendingIntent.getBroadcast(ctx, Codes.REQUEST_CODE, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(ctx, NotificationCodes.REQUEST_CODE, i, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     /**
