@@ -9,6 +9,8 @@ import android.util.Log;
 
 import java.util.Calendar;
 
+import dev.remembertheumbrella.Codes;
+
 /**
  * Notification event receiver.
  */
@@ -19,7 +21,6 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
 
     public static final String TAG = "NotifEventReceiver";
 
-    private static final int NOTIFICATION_INTERVAL_HOURS = 24;
     private static final String START_NOTIFICATION_SERVICE = "startNotificationService";
     private static final String DELETED_NOTIFICATION = "deletedNotification";
 
@@ -31,8 +32,8 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
         AlarmManager alarmManager = (AlarmManager) ctx.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = getStartPendingIntent(ctx);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
-                getTimeUntilHour(),
-                AlarmManager.INTERVAL_HOUR * NOTIFICATION_INTERVAL_HOURS,
+                getRemainingTimeUntilAlarm(),
+                AlarmManager.INTERVAL_DAY,
                 alarmIntent);
     }
 
@@ -46,24 +47,41 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
 
         Intent i = new Intent(ctx, NotificationEventReceiver.class);
         i.setAction(START_NOTIFICATION_SERVICE);
-        return PendingIntent.getBroadcast(ctx, 0, i, PendingIntent.FLAG_UPDATE_CURRENT);
+        return PendingIntent.getBroadcast(ctx, Codes.REQUEST_CODE, i, PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
     /**
-     * Returns time resting until XXXXXX hour.
+     * Returns time resting until specified Alarm Time.
      *
-     * @return Time in millis until X hour.
+     * @return Time in millis until alarm time.
      */
-    public static long getTimeUntilHour() {
+    public static long getRemainingTimeUntilAlarm() {
 
-        Calendar calendar = Calendar.getInstance();
 
-        calendar.set(Calendar.HOUR_OF_DAY, 13);
-        calendar.set(Calendar.MINUTE, 10);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
+        Calendar currentCalendar = Calendar.getInstance();
+        Calendar alarmCalendar = Calendar.getInstance();
 
-        return calendar.getTimeInMillis();
+        alarmCalendar.set(Calendar.HOUR, 11);
+        alarmCalendar.set(Calendar.MINUTE, 53);
+        alarmCalendar.set(Calendar.SECOND, 0);
+        alarmCalendar.set(Calendar.MILLISECOND, 0);
+
+        long currentTime = currentCalendar.getTimeInMillis();
+        long alarmTime = alarmCalendar.getTimeInMillis();
+
+        //Next day.
+        if (currentTime > alarmTime) {
+
+            Log.v(TAG, "Will be triggered next day.");
+            alarmCalendar.add(Calendar.DAY_OF_MONTH, 1);
+            alarmTime = alarmCalendar.getTimeInMillis();
+
+        } else {
+
+            Log.v(TAG, "Will be triggered today.");
+        }
+
+        return alarmTime;
     }
 
     @Override
@@ -74,6 +92,5 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
             Log.v(TAG, "onReceive triggered from alarm.");
             startWakefulService(context, NotificationIntentService.from(context));
         }
-
     }
 }

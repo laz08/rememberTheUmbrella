@@ -1,14 +1,17 @@
 package dev.remembertheumbrella.notification;
 
 import android.app.IntentService;
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
 
+import dev.remembertheumbrella.Codes;
 import dev.remembertheumbrella.R;
 import dev.remembertheumbrella.activity.TakeUmbrellaActivity;
 
@@ -16,8 +19,6 @@ import dev.remembertheumbrella.activity.TakeUmbrellaActivity;
  * Notification intent service.
  */
 public class NotificationIntentService extends IntentService {
-
-    private static final String ACTION_START = "actionStart";
 
     private static final String TAG = "NotifIntentServ";
 
@@ -28,17 +29,6 @@ public class NotificationIntentService extends IntentService {
 
         super(TAG);
     }
-
-    /**
-     * Constructor.
-     *
-     * @param name Name.
-     */
-    public NotificationIntentService(String name) {
-
-        super(name);
-    }
-
 
     /**
      * Creates intent notification service.
@@ -61,6 +51,7 @@ public class NotificationIntentService extends IntentService {
             String action = intent.getAction();
             if (ACTION_START.equals(action)) {
 
+                Log.v(TAG, "Is start action");
                 processStartNotification();
             }
         } finally {
@@ -73,22 +64,42 @@ public class NotificationIntentService extends IntentService {
      */
     private void processStartNotification() {
 
+        Log.v(TAG, "Processing start notification.");
 
-        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setContentTitle("Scheduled Notification")
-                .setAutoCancel(true)
-                .setColor(getResources().getColor(R.color.colorAccent))
-                .setContentText("This notification has been triggered by Notification Service");
-//                .setSmallIcon(R.drawable.notification_icon);
+        Context ctx = getBaseContext();
 
-        PendingIntent pendingIntent = PendingIntent.getActivity(this,
-                0,
-                new Intent(this, TakeUmbrellaActivity.class),
-                PendingIntent.FLAG_UPDATE_CURRENT);
-        builder.setContentIntent(pendingIntent);
+        NotificationCompat.Builder notifBuilder = new NotificationCompat.Builder(ctx);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 
-        final NotificationManager manager = (NotificationManager) this.getSystemService(Context.NOTIFICATION_SERVICE);
-        manager.notify(0, builder.build());
+            notifBuilder.setSmallIcon(R.mipmap.ic_launcher);
+            notifBuilder.setColor(getResources().getColor(R.color.colorPrimary));
+        } else {
+
+            notifBuilder.setSmallIcon(R.mipmap.ic_launcher);
+        }
+
+        Notification notification = notifBuilder
+                .setContentTitle("prova")
+                .setContentText("dw")
+                .setContentIntent(getOnNotificationClickIntent())
+                .build();
+
+        NotificationManager manager = (NotificationManager) getBaseContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        manager.notify(Codes.NOTIF_ID, notification);
     }
 
+    /**
+     * Returns intent to open when on notification click.
+     *
+     * @return Pending intent.
+     */
+    private PendingIntent getOnNotificationClickIntent() {
+
+        return PendingIntent.getActivity(this,
+                Codes.NOTIF_ID,
+                new Intent(this, TakeUmbrellaActivity.class),
+                PendingIntent.FLAG_UPDATE_CURRENT);
+    }
+
+    private static final String ACTION_START = "actionStart";
 }

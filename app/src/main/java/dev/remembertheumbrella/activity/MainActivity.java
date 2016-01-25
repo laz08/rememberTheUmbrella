@@ -15,6 +15,7 @@ import dev.remembertheumbrella.WeatherCallback;
 import dev.remembertheumbrella.api.ApiRestManager;
 import dev.remembertheumbrella.helper.ImageLoaderHelper;
 import dev.remembertheumbrella.item.CurrentWeather;
+import dev.remembertheumbrella.notification.NotificationEventReceiver;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,6 +53,16 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         mApiRestManager = new ApiRestManager(getApplicationContext());
+        startNotificationAlarm();
+    }
+
+    /**
+     * Starts notification alarm.
+     */
+    private void startNotificationAlarm() {
+
+        Log.v(TAG, "Starting notification alarm.");
+        NotificationEventReceiver.setUpAlarm(getApplicationContext());
     }
 
     /**
