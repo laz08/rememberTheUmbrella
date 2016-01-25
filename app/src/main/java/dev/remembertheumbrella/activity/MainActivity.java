@@ -3,8 +3,9 @@ package dev.remembertheumbrella.activity;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ import dev.remembertheumbrella.helper.ImageLoaderHelper;
 import dev.remembertheumbrella.item.CurrentWeather;
 import dev.remembertheumbrella.notification.NotificationEventReceiver;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     public static final String TAG = "MainActivity";
 
@@ -32,6 +33,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Bind(R.id.temperature)
     TextView mTemperature;
+
+    @Bind(R.id.settings_button)
+    Button mSettingsButton;
 
     private ApiRestManager mApiRestManager;
 
@@ -51,6 +55,15 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        mSettingsButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+
+                openSettingsActivityFrom(getApplicationContext());
+            }
+        });
 
         mApiRestManager = new ApiRestManager(getApplicationContext());
         startNotificationAlarm();

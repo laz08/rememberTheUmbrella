@@ -22,7 +22,6 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
     public static final String TAG = "NotifEventReceiver";
 
     private static final String START_NOTIFICATION_SERVICE = "startNotificationService";
-    private static final String DELETED_NOTIFICATION = "deletedNotification";
 
     /**
      * Sets alarm up.
@@ -56,7 +55,6 @@ public class NotificationEventReceiver extends WakefulBroadcastReceiver {
      * @return Time in millis until alarm time.
      */
     public static long getRemainingTimeUntilAlarm() {
-
 
         Calendar currentCalendar = Calendar.getInstance();
         Calendar alarmCalendar = Calendar.getInstance();
